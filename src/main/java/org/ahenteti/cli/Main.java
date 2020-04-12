@@ -10,7 +10,7 @@ import org.ahenteti.cli.option.service.UserInputsService;
 public class Main {
 
     public static UserInputsService userInputsService = new UserInputsService();
-    public static IPrinter logger = ConsolePrinter.getInstance();
+    public static IPrinter printer = ConsolePrinter.getInstance();
 
     public static void main(String[] args) {
         try {
@@ -18,9 +18,7 @@ public class Main {
             ICommand command = CommandFactory.create(options.getCommand());
             command.execute(options);
         } catch (Exception e) {
-            logger.print(e);
-        } finally {
-            logger.printNewLine();
+            printer.print(e);
         }
     }
 }

@@ -5,7 +5,5 @@ public interface IPrinter {
 
     void print(Exception exception);
     
-    void printNewLine();
-    
     void clearLastMessage();
 }
