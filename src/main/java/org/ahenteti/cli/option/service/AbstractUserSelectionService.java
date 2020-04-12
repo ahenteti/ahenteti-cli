@@ -1,8 +1,10 @@
 package org.ahenteti.cli.option.service;
 
 import org.ahenteti.cli.option.model.UserSelection;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Scanner;
 
 public abstract class AbstractUserSelectionService<T> implements IUserSelectionService<T> {
@@ -14,7 +16,15 @@ public abstract class AbstractUserSelectionService<T> implements IUserSelectionS
         return convert(userInput);
     }
 
+    @Override
+    public Optional<UserSelection<T>> findDefaultSelection() {
+        return getAuthorizedValues().stream().filter(UserSelection::isDefaultValue).findFirst();
+    }
+
     public boolean isValid(String input) {
+        if (StringUtils.isEmpty(input) && findDefaultSelection().isPresent()) {
+            return true;
+        }
         for (UserSelection<T> authorizedValue : getAuthorizedValues()) {
             if (authorizedValue.getShortSelection().equals(input) || authorizedValue.getLongSelection().equals(input)) {
                 return true;
@@ -24,6 +34,12 @@ public abstract class AbstractUserSelectionService<T> implements IUserSelectionS
     }
 
     public T convert(String input) {
+        if (StringUtils.isEmpty(input)) {
+            Optional<UserSelection<T>> defaultSelection = findDefaultSelection();
+            if (defaultSelection.isPresent()) {
+                return defaultSelection.get().getValue();
+            }
+        }
         for (UserSelection<T> authorizedValue : getAuthorizedValues()) {
             if (authorizedValue.getShortSelection().equals(input) || authorizedValue.getLongSelection().equals(input)) {
                 return authorizedValue.getValue();
@@ -67,9 +83,19 @@ public abstract class AbstractUserSelectionService<T> implements IUserSelectionS
     }
 
     private void printOptions() {
+        StringBuilder sb = new StringBuilder();
         for (UserSelection<T> authorizedValue : getAuthorizedValues()) {
-            System.out.println(" " + authorizedValue.getShortSelection() + ") " + authorizedValue.getLongSelection());
+            sb.append(" ");
+            sb.append(authorizedValue.getShortSelection());
+            sb.append(") ");
+            sb.append(authorizedValue.getLongSelection());
+            if (authorizedValue.isDefaultValue()) {
+                sb.append(" (default value)");
+            }
+            sb.append("\n");
         }
+        sb.append(" Your answer: ");
+        System.out.print(sb.toString());
     }
 
 

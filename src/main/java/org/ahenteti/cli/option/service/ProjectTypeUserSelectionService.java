@@ -15,7 +15,7 @@ public class ProjectTypeUserSelectionService extends AbstractUserSelectionServic
     protected Collection<UserSelection<EProjectType>> getAuthorizedValues() {
         // @formatter:off
         return Arrays.asList(
-            new UserSelection<EProjectType>("1", "maven", EProjectType.MAVEN),
+            new UserSelection<EProjectType>("1", "maven", EProjectType.MAVEN, true),
             new UserSelection<EProjectType>("2", "angular", EProjectType.ANGULAR)
         );
         // @formatter:on

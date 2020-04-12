@@ -4,8 +4,13 @@ import org.ahenteti.cli.exception.CreateProjectCommandException;
 import org.ahenteti.cli.exception.InvalidCommandOptionsException;
 import org.ahenteti.cli.option.model.CommandOptions;
 import org.ahenteti.cli.option.model.CreateProjectCommandOptions;
+import org.ahenteti.cli.util.ProjectVelocityEngine;
 import org.apache.commons.io.FileUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -14,14 +19,33 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class CreateProjectCommand implements ICommand {
+    
     @Override
     public void execute(CommandOptions optionsInput) {
         if (!(optionsInput instanceof CreateProjectCommandOptions)) {
             throw new InvalidCommandOptionsException(ECommand.CREATE_PROJECT);
         }
         CreateProjectCommandOptions options = (CreateProjectCommandOptions) optionsInput;
-        Path currentDirectory = createDestinationDirectory(options);
-        unzipProjectFile(options, currentDirectory);
+        Path destination = createDestinationDirectory(options);
+        unzipProjectFile(options, destination);
+        createPomXmlFileFromTemplate(destination, options);
+    }
+
+    private void createPomXmlFileFromTemplate(Path destination, CreateProjectCommandOptions options) {
+        try (BufferedWriter writer = Files.newBufferedWriter(destination.resolve("pom.xml"))) {
+            String pomTemplateFileName = "pom.vm";
+            Path pomTemplatePath = destination.resolve(pomTemplateFileName);
+            VelocityContext velocityContext = new VelocityContext();
+            velocityContext.put("ctx", options);
+            VelocityEngine velocityEngine = new ProjectVelocityEngine(destination);
+            velocityEngine.init();
+            Template velocityTemplate = velocityEngine.getTemplate(pomTemplateFileName);
+            velocityTemplate.merge(velocityContext, writer);
+            Files.delete(pomTemplatePath);
+        } catch (IOException e) {
+            throw new CreateProjectCommandException(e);
+        }
+        
     }
 
     private Path createDestinationDirectory(CreateProjectCommandOptions options) {

@@ -3,7 +3,7 @@ package org.ahenteti.cli.exception;
 import org.ahenteti.cli.command.ECommand;
 import org.ahenteti.cli.command.EProjectType;
 
-public class UnknownProjectTypeException extends RuntimeException {
+public class UnknownProjectTypeException extends ProjectRuntimeException {
     public UnknownProjectTypeException(EProjectType projectType) {
         super(calculateExceptionMessage(projectType));
     }

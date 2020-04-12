@@ -2,7 +2,7 @@ package org.ahenteti.cli.exception;
 
 import org.ahenteti.cli.command.ECommand;
 
-public class UnknownUserCommandException extends RuntimeException {
+public class UnknownUserCommandException extends ProjectRuntimeException {
     public UnknownUserCommandException(String command) {
         super(calculateExceptionMessage(command));
     }
