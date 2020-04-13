@@ -16,7 +16,7 @@ public class CreateProjectCommandUserInputsService implements ICommandUserInputs
     @Override
     public CommandOptions getCommandOptions() {
         CreateProjectCommandOptions options = new CreateProjectCommandOptions();
-        options.setProjectName(mandatoryStringUserInputService.getUserInput("Your project name ? "));
+        options.setProjectName(mandatoryStringUserInputService.getUserInput("Choose a name for your project: "));
         options.setType(projectTypeUserSelectionService.getUserInput());
         return options;
     }

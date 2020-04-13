@@ -1,29 +1,53 @@
 package org.ahenteti.cli.option.service;
 
+import org.ahenteti.cli.util.ConsoleColors;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Scanner;
-
-public class MandatoryStringUserInputService {
+public class MandatoryStringUserInputService extends CommonUserInputService {
 
     public String getUserInput(String question) {
-        printQuestion(question);
-        return getValidUserInput();
+        printer.print(getQuestionToPrint(question));
+        return getValidUserInput(question);
     }
 
-    private String getValidUserInput() {
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
+    private String getValidUserInput(String question) {
+        String input = reader.readLine();
         while (StringUtils.isBlank(input)) {
-            System.out.print(" Empty string is invalid. Please try again: ");
-            input = in.nextLine();
+            printer.clearLastMessagePlusReturnKey();
+            printer.print(getQuestionToPrint(question));
+            input = reader.readLine();
         }
+        printer.clearLastMessagePlusReturnKey();
+        printer.print(getQuestionAnswerToPrint(question, input));
         return input;
     }
 
-    private void printQuestion(String question) {
-        System.out.print("\n");
-        System.out.print(question);
+    private String getQuestionAnswerToPrint(String question, String answer) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getQuestionToPrintWithAnswer(question));
+        sb.append(ConsoleColors.ANSI_LIGHT_GREEN);
+        sb.append(answer);
+        sb.append(ConsoleColors.ANSI_RESET);
+        return sb.toString();
+    }
+
+    private String getQuestionToPrint(String question) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ConsoleColors.ANSI_CYAN);
+        sb.append("? ");
+        sb.append(ConsoleColors.ANSI_RESET);
+        sb.append(question);
+        return sb.toString();
+    }
+
+    private String getQuestionToPrintWithAnswer(String question) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(ConsoleColors.ANSI_CYAN);
+        sb.append("? ");
+        sb.append(ConsoleColors.ANSI_WHITE);
+        sb.append(question);
+        sb.append(ConsoleColors.ANSI_RESET);
+        return sb.toString();
     }
 
 }

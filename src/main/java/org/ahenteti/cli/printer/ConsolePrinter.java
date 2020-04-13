@@ -1,14 +1,16 @@
-package org.ahenteti.cli.logger;
+package org.ahenteti.cli.printer;
 
 import org.ahenteti.cli.util.ConsoleColors;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.stream.LongStream;
 
+import static org.ahenteti.cli.util.ConsoleColors.ANSI_LIGHT_GREEN;
 import static org.ahenteti.cli.util.ConsoleColors.ANSI_RED;
 import static org.ahenteti.cli.util.ConsoleColors.ANSI_RESET;
+import static org.ahenteti.cli.util.ConsoleColors.ANSI_WHITE;
 
 public class ConsolePrinter implements IPrinter {
 
@@ -20,6 +22,17 @@ public class ConsolePrinter implements IPrinter {
 
     public static ConsolePrinter getInstance() {
         return INSTANCE;
+    }
+
+    @Override
+    public void printSuccess() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n\nTask ");
+        sb.append(ANSI_LIGHT_GREEN);
+        sb.append("successfully");
+        sb.append(ANSI_RESET);
+        sb.append(" completed");
+        System.out.println(sb.toString());
     }
 
     @Override
@@ -50,11 +63,37 @@ public class ConsolePrinter implements IPrinter {
         }
     }
 
+    @Override
+    public void clearLastMessagePlusReturnKey() {
+        lastPrintedMessageLines++;
+        clearLastMessage();
+    }
+
+    @Override
+    public void hideCursor() {
+        // code source: https://rosettacode.org/wiki/Terminal_control/Hiding_the_cursor#Kotlin
+        System.out.print("\u001B[?25l");
+
+    }
+
+    @Override
+    public void showCursor() {
+        // code source: https://rosettacode.org/wiki/Terminal_control/Hiding_the_cursor#Kotlin
+        System.out.print("\u001B[?25h");
+    }
+
     private void printMessage(String color, String message) {
         message = message.replaceAll("^([^\n])", "\n$1");
-        message = message.replaceAll("[\r\n]*$", "\n");
+        message = message.replaceAll("[\r\n]*$", "");
         message = color + message + ConsoleColors.ANSI_RESET;
         System.out.print(message);
-        lastPrintedMessageLines = Arrays.stream(message.split("\n")).count() - 1;
+        lastPrintedMessageLines = getLastPrintedMessageLines(message);
+    }
+
+    private long getLastPrintedMessageLines(String message) {
+        if (Arrays.stream(message.split("\n")).count() == 1) {
+            return 1;
+        }
+        return Arrays.stream(message.split("\n")).count() - 1;
     }
 }

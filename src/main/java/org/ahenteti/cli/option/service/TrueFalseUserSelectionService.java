@@ -2,41 +2,25 @@ package org.ahenteti.cli.option.service;
 
 import org.ahenteti.cli.option.model.UserSelection;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.ArrayList;
 
 public class TrueFalseUserSelectionService extends AbstractUserSelectionService<Boolean> {
 
     private String question;
-    private boolean defaultValue;
 
-    public TrueFalseUserSelectionService(String question, boolean defaultValue) {
+    public TrueFalseUserSelectionService(String question) {
         this.question = question;
-        this.defaultValue = defaultValue;
     }
 
     public String getQuestion() {
         return question;
     }
 
-    public boolean isDefaultValue() {
-        return defaultValue;
-    }
-
-    protected Collection<UserSelection<Boolean>> getAuthorizedValues() {
-        // @formatter:off
-        if (defaultValue) {
-            return Arrays.asList(
-                new UserSelection<>("1", "True", Boolean.TRUE, true),
-                new UserSelection<>("2", "False", Boolean.FALSE)
-            );
-        } else {
-            return Arrays.asList(
-                new UserSelection<>("1", "True", Boolean.TRUE),
-                new UserSelection<>("2", "False", Boolean.FALSE, true)
-            );
-        }
-        // @formatter:on
+    protected ArrayList<UserSelection<Boolean>> getAuthorizedValues() {
+        ArrayList<UserSelection<Boolean>> res = new ArrayList<>();
+        res.add(new UserSelection<>("true", Boolean.TRUE));
+        res.add(new UserSelection<>("false", Boolean.FALSE));
+        return res;
     }
 
 }

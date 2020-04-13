@@ -13,12 +13,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserSelection<T> {
 
-    private String shortSelection;
-    private String longSelection;
+    private String label;
     private T value;
-    private boolean defaultValue;
 
-    public UserSelection(String shortSelection, String longSelection, T value) {
-        this(shortSelection, longSelection, value, false);
-    }
 }
