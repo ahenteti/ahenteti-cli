@@ -5,7 +5,7 @@ import org.ahenteti.cli.command.EProjectType;
 import org.ahenteti.cli.option.service.ProjectTypeUserSelectionService;
 
 public class ProjectTypeConverter implements IStringConverter<EProjectType> {
-    
+
     private ProjectTypeUserSelectionService service;
 
     public ProjectTypeConverter() {

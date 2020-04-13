@@ -6,12 +6,12 @@ public interface IPrinter {
     void printSuccess();
 
     void print(Exception exception);
-    
+
     void clearLastMessage();
-    
+
     void clearLastMessagePlusReturnKey();
-    
+
     void hideCursor();
-    
+
     void showCursor();
 }

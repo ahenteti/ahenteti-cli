@@ -19,7 +19,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class CreateProjectCommand implements ICommand {
-    
+
     @Override
     public void execute(CommandOptions optionsInput) {
         if (!(optionsInput instanceof CreateProjectCommandOptions)) {
@@ -45,7 +45,7 @@ public class CreateProjectCommand implements ICommand {
         } catch (IOException e) {
             throw new CreateProjectCommandException(e);
         }
-        
+
     }
 
     private Path createDestinationDirectory(CreateProjectCommandOptions options) {

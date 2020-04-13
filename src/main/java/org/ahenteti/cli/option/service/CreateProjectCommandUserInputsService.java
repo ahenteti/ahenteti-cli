@@ -4,7 +4,7 @@ import org.ahenteti.cli.option.model.CommandOptions;
 import org.ahenteti.cli.option.model.CreateProjectCommandOptions;
 
 public class CreateProjectCommandUserInputsService implements ICommandUserInputsService {
-    
+
     private ProjectTypeUserSelectionService projectTypeUserSelectionService;
     private MandatoryStringUserInputService mandatoryStringUserInputService;
 

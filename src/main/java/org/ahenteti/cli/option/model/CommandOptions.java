@@ -9,7 +9,7 @@ public class CommandOptions {
 
     @Parameter(names = {"-s", "--silent"}, description = "execute the script silently")
     private boolean silent = false;
-    
+
     protected ECommand command;
 
 }

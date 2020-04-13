@@ -1,7 +1,7 @@
 package org.ahenteti.cli.option.service;
 
-import org.ahenteti.cli.exception.UnknownUserCommandException;
 import org.ahenteti.cli.command.ECommand;
+import org.ahenteti.cli.exception.UnknownUserCommandException;
 
 import java.util.Objects;
 

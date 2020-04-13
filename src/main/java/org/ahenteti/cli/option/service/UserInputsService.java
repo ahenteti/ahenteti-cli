@@ -1,9 +1,9 @@
 package org.ahenteti.cli.option.service;
 
+import org.ahenteti.cli.command.ECommand;
 import org.ahenteti.cli.exception.UserCommandNotFoundException;
 import org.ahenteti.cli.option.model.CommandOptions;
 import org.ahenteti.cli.option.model.CommandOptionsFactory;
-import org.ahenteti.cli.command.ECommand;
 
 public class UserInputsService {
 

@@ -27,9 +27,11 @@ public class CreateProjectCommandOptions extends CommandOptions {
     public ZipInputStream getProjectZipFile() {
         switch (type) {
             case MAVEN:
-                return new ZipInputStream(getClass().getClassLoader().getResourceAsStream("create-project-command/maven.zip"));
+                return new ZipInputStream(getClass().getClassLoader()
+                        .getResourceAsStream("create-project-command/maven.zip"));
             case ANGULAR:
-                return new ZipInputStream(getClass().getClassLoader().getResourceAsStream("create-project-command/angular.zip"));
+                return new ZipInputStream(getClass().getClassLoader()
+                        .getResourceAsStream("create-project-command/angular.zip"));
             default:
                 throw new UnknownProjectTypeException(type);
         }

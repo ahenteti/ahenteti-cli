@@ -4,13 +4,11 @@ import org.ahenteti.cli.util.ConsoleColors;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import static org.ahenteti.cli.util.ConsoleColors.ANSI_LIGHT_GREEN;
 import static org.ahenteti.cli.util.ConsoleColors.ANSI_RED;
 import static org.ahenteti.cli.util.ConsoleColors.ANSI_RESET;
-import static org.ahenteti.cli.util.ConsoleColors.ANSI_WHITE;
 
 public class ConsolePrinter implements IPrinter {
 

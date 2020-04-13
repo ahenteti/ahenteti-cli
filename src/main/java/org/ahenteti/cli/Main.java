@@ -2,10 +2,10 @@ package org.ahenteti.cli;
 
 import org.ahenteti.cli.command.CommandFactory;
 import org.ahenteti.cli.command.ICommand;
-import org.ahenteti.cli.printer.ConsolePrinter;
-import org.ahenteti.cli.printer.IPrinter;
 import org.ahenteti.cli.option.model.CommandOptions;
 import org.ahenteti.cli.option.service.UserInputsService;
+import org.ahenteti.cli.printer.ConsolePrinter;
+import org.ahenteti.cli.printer.IPrinter;
 
 public class Main {
 
