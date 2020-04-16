@@ -1,25 +1,28 @@
 package org.ahenteti.cli;
 
-import org.ahenteti.cli.command.CommandFactory;
-import org.ahenteti.cli.command.ICommand;
-import org.ahenteti.cli.option.model.CommandOptions;
-import org.ahenteti.cli.option.service.UserInputsService;
-import org.ahenteti.cli.printer.ConsolePrinter;
-import org.ahenteti.cli.printer.IPrinter;
+import org.ahenteti.cli.api.exception.UserCommandNotFoundException;
+import org.ahenteti.cli.api.model.ECommand;
+import org.ahenteti.cli.api.service.IPrinter;
+import org.ahenteti.cli.api.service.IUserCommandService;
+import org.ahenteti.cli.impl.printer.StandardConsolePrinter;
+import org.ahenteti.cli.impl.service.command.UserCommandServiceFactory;
 
 public class Main {
 
-    public static UserInputsService userInputsService = new UserInputsService();
-    public static IPrinter printer = ConsolePrinter.getInstance();
+    private static IPrinter printer = new StandardConsolePrinter();
 
     public static void main(String[] args) {
         try {
-            CommandOptions options = userInputsService.handleUserInputs(args);
-            ICommand command = CommandFactory.create(options.getCommand());
-            command.execute(options);
-            printer.printSuccess();
+            ECommand userCommand = getUserCommand(args);
+            IUserCommandService service = UserCommandServiceFactory.create(userCommand);
+            service.run(args);
         } catch (Exception e) {
             printer.print(e);
         }
+    }
+
+    private static ECommand getUserCommand(String[] args) {
+        if (args.length == 0) throw new UserCommandNotFoundException();
+        return ECommand.from(args[0]);
     }
 }

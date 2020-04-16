@@ -5,5 +5,3 @@ My cli project that I use to :
  - do my recurrent file manipulation: 
    - pdf concatenation
    - pdf conversion
- 
-*This cli project was tested on [git-bash](https://gitforwindows.org/) terminal on windows*
