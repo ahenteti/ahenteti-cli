@@ -1,11 +1,11 @@
 package org.ahenteti.cli;
 
-import org.ahenteti.cli.api.exception.UserCommandNotFoundException;
-import org.ahenteti.cli.api.model.ECommand;
-import org.ahenteti.cli.api.service.IPrinter;
-import org.ahenteti.cli.api.service.IUserCommandService;
-import org.ahenteti.cli.impl.printer.StandardConsolePrinter;
-import org.ahenteti.cli.impl.service.command.UserCommandServiceFactory;
+import org.ahenteti.cli.exception.UserCommandNotFoundException;
+import org.ahenteti.cli.model.ECommand;
+import org.ahenteti.cli.service.printer.IPrinter;
+import org.ahenteti.cli.service.command.IUserCommandService;
+import org.ahenteti.cli.service.printer.StandardConsolePrinter;
+import org.ahenteti.cli.service.command.UserCommandServiceFactory;
 
 public class Main {
 
